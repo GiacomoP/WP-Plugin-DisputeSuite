@@ -1,0 +1,69 @@
+@import "utils";
+
+.ds-service {
+    display: table;
+    max-width: 300px;
+    width: 100%;
+    height: 90px;
+    font-family: Helvetica, Arial, sans-serif !important;
+    font-size: 1.6em;
+    color: #f9f9f9;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 0 auto;
+
+    >div {
+        display: table-cell;
+        vertical-align: middle;
+        .box-shadow(inset 0px -8px 0 -4px rgba(0,0,0,0.2));
+        .transition(all 0.5s ease);
+    }
+
+    .icon-container {
+        width: 25%;
+        border-radius: 10px 0 0 10px;
+        background-color: #777;
+
+        .icon {
+            padding: 8px;
+        }
+    }
+
+    .name-container {
+        width: 75%;
+        border-radius: 0 10px 10px 0;
+        background-color: #96c1cc;
+
+        .title {
+            display: block;
+            text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 320px) {
+            font-size: 0.7em;
+        }
+    }
+
+    &&-couple .name-container {
+        background-color: #f49438;
+    }
+
+    &:hover {
+        >div {
+            .box-shadow(none);
+        }
+
+        .icon-container {
+            background-color: #5a5a5a;
+        }
+    }
+
+    &&-individual:hover .name-container {
+        background-color: #7ab1bf;
+    }
+
+    &&-couple:hover .name-container {
+        background-color: #d88e47;
+    }
+}
