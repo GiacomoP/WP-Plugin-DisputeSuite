@@ -16,7 +16,8 @@
     "grunt-contrib-uglify": "^2.0.0"
   },
   "browserify-shim": {
-    "jquery": "global:jQuery"
+    "jquery": "global:jQuery",
+    "dsConfig": "global:dsConfig"
   },
   "browserify": {
     "transform": [

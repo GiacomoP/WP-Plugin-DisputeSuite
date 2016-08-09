@@ -2,6 +2,7 @@
 
 namespace DisputeSuite;
 
+use DisputeSuite\Shortcodes\ClientInfoForm;
 use DisputeSuite\Shortcodes\Date;
 use DisputeSuite\Shortcodes\Ip;
 use DisputeSuite\Shortcodes\Service;
@@ -24,6 +25,7 @@ class ShortcodeManager
     public function __construct()
     {
         $this->shortcodes = [
+            new ClientInfoForm(),
             new Date(),
             new Ip(),
             new Service(),

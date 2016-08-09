@@ -102,7 +102,7 @@ class Controller
         wp_localize_script('ds-main', 'dsConfig', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'homeUrl' => home_url(),
-            'pluginUrl' => plugin_dir_url(__FILE__)
+            'pluginUrl' => plugin_dir_url(dirname(__FILE__))
         ]);
     }
 

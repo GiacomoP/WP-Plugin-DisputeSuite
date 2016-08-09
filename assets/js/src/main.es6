@@ -1,3 +1,4 @@
-import $ from 'jquery';
+import App from './App.es6';
 
-window.console.log($);
+let app = new App();
+app.run();
