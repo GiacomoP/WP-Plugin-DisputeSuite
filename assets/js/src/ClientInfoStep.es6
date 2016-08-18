@@ -42,15 +42,23 @@ class ClientInfoStep extends Step {
         super._setHandlers();
 
         let me = this,
-            onAjaxFail = function() {
+            onAjaxFail = function(msg) {
+                var out = 'An error has occurred. If the problem persists please contact us.';
+                if (typeof msg !== 'undefined') {
+                    out = `An error has occurred:\n\n${msg}`;
+                }
                 me.buttonEl.replaceWith(me._savedButtonEl);
-                alert('An error has occurred. If the problem persists please contact us.');
+                alert(out);
             },
             onAjaxDone = function(res) {
-                if (res === 'ask-secondary') {
-                    window.location.reload();
-                } else if (res === 'ok') {
-                    window.location = `${config.homeUrl}/ds-step/client-agreement/`;
+                if (typeof res === 'object' && 'action' in res) {
+                    if (res['action'] === 'ask-secondary') {
+                        window.location.reload();
+                    } else if (res['action'] === 'location' && 'url' in res) {
+                        window.location = res['url'];
+                    }
+                } else if (typeof res === 'object' && 'error' in res) {
+                    onAjaxFail(res['error']);
                 } else {
                     onAjaxFail();
                 }
@@ -70,6 +78,7 @@ class ClientInfoStep extends Step {
                 url: config.ajaxUrl,
                 data: {
                     'action': 'saveCustomer',
+                    /** @TODO implement 'security': 'nonceValue' */
                     'formData': $(this).serialize()
                 },
                 cache: false

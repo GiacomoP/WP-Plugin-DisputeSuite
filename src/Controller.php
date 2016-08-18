@@ -2,6 +2,9 @@
 
 namespace DisputeSuite;
 
+use DisputeSuite\Entities\Customer;
+use DisputeSuite\Utils\Response;
+
 use Respect\Validation\Validator as v;
 
 /**
@@ -33,6 +36,9 @@ class Controller
         Loader::addAction('wp_enqueue_scripts', [$this, 'addHighPriorityResources'], -1);
         Loader::addAction('wp_enqueue_scripts', [$this, 'addStyles'], PHP_INT_MAX);
         Loader::addAction('wp_enqueue_scripts', [$this, 'addScripts']);
+
+        // AJAX actions
+        Loader::addAjax('saveCustomer', [$this, 'doSaveCustomer']);
     }
 
     /**
@@ -104,6 +110,53 @@ class Controller
             'homeUrl' => home_url(),
             'pluginUrl' => plugin_dir_url(dirname(__FILE__))
         ]);
+    }
+
+    /**
+     * Callback for AJAX action: saveCustomer.
+     */
+    public function doSaveCustomer()
+    {
+        // Parse serialized form data
+        $formData = [];
+        parse_str($_POST['formData'], $formData);
+
+        /** @TODO implement check_ajax_referer() */
+
+        $applicant = null;
+        if (Customer::isSupportedType($formData['applicant'])) {
+            $applicant = $formData['applicant'];
+        } else {
+            Response::sendErrorAndDie('The type of applicant was not recognized.');
+        }
+
+        $customerData = [];
+        foreach (Customer::formIntoEntityMap() as $formEl => $prop) {
+            if ($prop === 'address') {
+                $customerData['address'][] = $formData[$formEl];
+            } else {
+                $customerData[$prop] = $formData[$formEl];
+            }
+        }
+        $adminOptions = get_option('ds_customer_client_info');
+        $customerData = array_merge($customerData, [
+            'recordTypeId' => $adminOptions['recordTypeId'],
+            'statusId' => $adminOptions['statusId'],
+            'folderId' => $adminOptions['folderId'],
+            'salesRepId' => 0,
+            'caseAgentId' => 0,
+            'workflowId' => $adminOptions['workflow'],
+            'emailsOptin' => true
+        ]);
+
+        try {
+            $customer = new Customer($customerData);
+        } catch (\Respect\Validation\Exceptions\NestedValidationException $e) {
+            Response::sendErrorAndDie($e->getFullMessage());
+        }
+
+        $session = App::getSession();
+        $session['ds-customer'][$applicant] = $customer;
     }
 
     /**

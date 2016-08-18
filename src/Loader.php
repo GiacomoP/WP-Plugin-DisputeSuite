@@ -17,6 +17,11 @@ class Loader
     /**
      * @var array
      */
+    private static $ajax = [];
+
+    /**
+     * @var array
+     */
     private static $activation = [];
 
     /**
@@ -44,6 +49,25 @@ class Loader
                 'args' => $args
             ];
         }
+    }
+
+    /**
+     * Adds an AJAX action.
+     *
+     * @param string    $name       The name of the action.
+     * @param callable  $callback   The callback function.
+     * @param boolean   $onlyAdmin  [optional] If the action is only for admins.
+     */
+    public static function addAjax($name, callable $callback, $onlyAdmin = false)
+    {
+        // Admin AJAX always present.
+        $hook = ["wp_ajax_{$name}"];
+        // If it's public, add also the nopriv action
+        if (!$onlyAdmin) {
+            $hook[] = "wp_ajax_nopriv_{$name}";
+        }
+
+        self::addAction($hook, $callback);
     }
 
     /**
