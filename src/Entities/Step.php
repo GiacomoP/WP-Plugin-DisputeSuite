@@ -7,7 +7,7 @@ use DisputeSuite\PostTypes\Step as CPTStep;
 /**
  * The object representation of the CPT post in Wordpress.
  */
-class Step extends AbstractEntity
+class Step extends AbstractPostEntity
 {
     /**
      * @var string

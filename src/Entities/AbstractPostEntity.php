@@ -7,7 +7,7 @@ use Respect\Validation\Validator as v;
 /**
  * A base class to map a Wordpress post into an entity.
  */
-abstract class AbstractEntity
+abstract class AbstractPostEntity
 {
     /**
      * @var int

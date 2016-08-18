@@ -9,7 +9,7 @@ use Respect\Validation\Validator as v;
 /**
  * The object representation of the CPT post in Wordpress.
  */
-class Service extends AbstractEntity
+class Service extends AbstractPostEntity
 {
     /**
      * @var string
