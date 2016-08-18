@@ -18,6 +18,7 @@ if (!defined('ABSPATH')) {
 
 // Composer
 require_once 'vendor/autoload.php';
+require_once 'dashboard/admin-init.php';
 
 use DisputeSuite\App;
 
