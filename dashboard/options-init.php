@@ -81,13 +81,13 @@ Redux::setArgs($opt_name, $args);
 // SECTIONS
 Redux::setSection($opt_name, [
     'title' => __('Integrations', 'dispute-suite'),
-    'id' => 'basic',
+    'id' => 'integrations',
     'icon' => 'el el-cogs'
 ]);
 
-$hintSystemApi = [
-    'title' => 'Where is this?',
-    'content' => 'Log in Dispute Suite with an administrator account, then click System API in the navigation menu.'
+$hintDsApi = [
+    'title' => __('Where is this?', 'dispute-suite'),
+    'content' => __('Log in Dispute Suite with an administrator account, then click System API in the navigation menu.', 'dispute-suite')
 ];
 
 Redux::setSection($opt_name, [
@@ -100,13 +100,13 @@ Redux::setSection($opt_name, [
             'id' => 'dispute-suite-company-key',
             'type' => 'text',
             'title' => __('Company Key', 'dispute-suite'),
-            'hint' => $hintSystemApi
+            'hint' => $hintDsApi
         ],
         [
             'id' => 'dispute-suite-api-key',
             'type' => 'password',
             'title' => __('API Key', 'dispute-suite'),
-            'hint' => $hintSystemApi
+            'hint' => $hintDsApi
         ],
         [
             'id' => 'dispute-suite-api-url',
@@ -114,7 +114,14 @@ Redux::setSection($opt_name, [
             'title' => __('API URL', 'dispute-suite'),
             'description' => __('Usually, there is no need to modify this field.', 'dispute-suite'),
             'default' => 'https://www.securecrmsite.com/Modules/System/API.asmx',
-            'hint' => $hintSystemApi
+            'hint' => $hintDsApi
+        ],
+        [
+            'id' => 'dispute-suite-api-connection',
+            'type' => 'javascript_button',
+            'title' => __('Connection', 'dispute-suite'),
+            'description' => __('You should fetch new data from Dispute Suite every time you add a new record type, customer status, etc...<br>This will also test the connection to Dispute Suite.', 'dispute-suite'),
+            'button_text' => __('Test &amp; fetch data', 'dispute-suite')
         ]
     ]
 ]);
@@ -128,12 +135,20 @@ Redux::setSection($opt_name, [
         [
             'id' => 'authorize-net-login-id',
             'type' => 'text',
-            'title' => __('Login ID', 'dispute-suite')
+            'title' => __('Login ID', 'dispute-suite'),
+            'hint' => [
+                'title' => __('Where is this?', 'dispute-suite'),
+                'content' => __('Log in your merchant account. Click <i>Account</i> on the navigation bar. Under <i>General Security Settings</i>, click on <i>API Credentials &amp; Keys</i>', 'dispute-suite')
+            ]
         ],
         [
             'id' => 'authorize-net-transaction-key',
             'type' => 'password',
-            'title' => __('Transaction Key', 'dispute-suite')
+            'title' => __('Transaction Key', 'dispute-suite'),
+            'hint' => [
+                'title' => __('Where is this?', 'dispute-suite'),
+                'content' => __('Log in your merchant account. Click <i>Account</i> on the navigation bar. Under <i>General Security Settings</i>, click on <i>API Credentials &amp; Keys</i><br>There, generate a new transaction key.', 'dispute-suite')
+            ]
         ],
         [
             'id' => 'authorize-net-environment',
@@ -141,7 +156,27 @@ Redux::setSection($opt_name, [
             'title' => __('Account Environment', 'dispute-suite'),
             'on' => 'Regular',
             'off' => 'Sandbox',
-            'default' => false
+            'default' => false,
+            'hint' => [
+                'title' => __('What is this?', 'dispute-suite'),
+                'content' => __('Simply select the type of your merchant account. There are two types: one for developers (Sandbox), one for real merchants (Regular).', 'dispute-suite')
+            ]
         ]
+    ]
+]);
+
+Redux::setSection($opt_name, [
+    'title' => __('Sign Up Procedure', 'dispute-suite'),
+    'id' => 'signup',
+    'icon' => 'el el-pencil'
+]);
+
+Redux::setSection($opt_name, [
+    'id' => 'sign-up-userinfo',
+    'title' => __('User Information Submitted', 'dispute-suite'),
+    'desc' => __("<p>When a user submits their personal information (Step 1), a new Lead/Customer will be created in Dispute Suite.</p><p>Here you can specify the <strong>Dispute Suite Customer</b> entity's attributes.</p>", 'dispute-suite'),
+    'subsection' => true,
+    'fields' => [
+        
     ]
 ]);
