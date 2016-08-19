@@ -100,13 +100,15 @@ Redux::setSection($opt_name, [
             'id' => 'dispute-suite-company-key',
             'type' => 'text',
             'title' => __('Company Key', 'dispute-suite'),
-            'hint' => $hintDsApi
+            'hint' => $hintDsApi,
+            'validate' => 'not_empty'
         ],
         [
             'id' => 'dispute-suite-api-key',
             'type' => 'password',
             'title' => __('API Key', 'dispute-suite'),
-            'hint' => $hintDsApi
+            'hint' => $hintDsApi,
+            'validate' => 'not_empty'
         ],
         [
             'id' => 'dispute-suite-api-url',
@@ -114,7 +116,8 @@ Redux::setSection($opt_name, [
             'title' => __('API URL', 'dispute-suite'),
             'description' => __('Usually, there is no need to modify this field.', 'dispute-suite'),
             'default' => 'https://www.securecrmsite.com/Modules/System/API.asmx',
-            'hint' => $hintDsApi
+            'hint' => $hintDsApi,
+            'validate' => 'url'
         ],
         [
             'id' => 'dispute-suite-api-connection',
@@ -139,7 +142,8 @@ Redux::setSection($opt_name, [
             'hint' => [
                 'title' => __('Where is this?', 'dispute-suite'),
                 'content' => __('Log in your merchant account. Click <i>Account</i> on the navigation bar. Under <i>General Security Settings</i>, click on <i>API Credentials &amp; Keys</i>', 'dispute-suite')
-            ]
+            ],
+            'validate' => 'not_empty'
         ],
         [
             'id' => 'authorize-net-transaction-key',
@@ -148,7 +152,8 @@ Redux::setSection($opt_name, [
             'hint' => [
                 'title' => __('Where is this?', 'dispute-suite'),
                 'content' => __('Log in your merchant account. Click <i>Account</i> on the navigation bar. Under <i>General Security Settings</i>, click on <i>API Credentials &amp; Keys</i><br>There, generate a new transaction key.', 'dispute-suite')
-            ]
+            ],
+            'validate' => 'not_empty'
         ],
         [
             'id' => 'authorize-net-environment',
@@ -177,6 +182,36 @@ Redux::setSection($opt_name, [
     'desc' => __("<p>When a user submits their personal information (Step 1), a new Lead/Customer will be created in Dispute Suite.</p><p>Here you can specify the <strong>Dispute Suite Customer</b> entity's attributes.</p>", 'dispute-suite'),
     'subsection' => true,
     'fields' => [
-        
+        [
+            'id' => 'userinfo-record-type',
+            'type' => 'select',
+            'title' => __('Record Type', 'dispute-suite')
+        ],
+        [
+            'id' => 'userinfo-status',
+            'type' => 'select',
+            'title' => __('Status', 'dispute-suite')
+        ],
+        [
+            'id' => 'userinfo-folder',
+            'type' => 'select',
+            'title' => __('Folder', 'dispute-suite')
+        ],
+        [
+            'id' => 'userinfo-sales-rep',
+            'type' => 'select',
+            'title' => __('Sales Representative', 'dispute-suite'),
+            'multi' => true
+        ],
+        [
+            'id' => 'userinfo-case-agent',
+            'type' => 'select',
+            'title' => __('Assigned To', 'dispute-suite')
+        ],
+        [
+            'id' => 'userinfo-workflow',
+            'type' => 'select',
+            'title' => __('Workflow', 'dispute-suite')
+        ]
     ]
 ]);
